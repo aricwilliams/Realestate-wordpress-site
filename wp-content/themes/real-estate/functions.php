@@ -8,7 +8,10 @@
         wp_enqueue_script('bootstrap-script', '//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js');
         wp_enqueue_style('google-api', '//fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans:wght@300&family=Raleway:wght@100&display&family=Dancing+Script&display=swap');
         wp_enqueue_style('font-awsome', '//use.fontawesome.com/releases/v5.13.1/css/all.css');
-        wp_enqueue_script('javascript', get_template_directory_uri() . 'script.js', array(), '', true);
+
+        wp_enqueue_script('jquery', get_template_directory_uri() . '//code.jquery.com/jquery-3.5.1.js', array(), '1', true);
+
+        wp_enqueue_script('javascript', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0', true);
         
 
         wp_enqueue_style('realEstateMainStyles',get_stylesheet_uri());
@@ -41,6 +44,22 @@
 
     add_action('after_setup_theme', 'featuredImage');
 
+
+    add_filter( 'default_content', 'my_editor_content' );
+    function my_editor_content( $content ) {
+    $content = "listing company: NC Realtors 
+
+    price: $94,476,000
+    
+    address: 1345 Night St, Miami Beach, FL 33140
+    
+    bed: 20
+    
+    baths: 9
+    
+    square foot: 30400";
+    return $content;
+}
 
 ?>
 

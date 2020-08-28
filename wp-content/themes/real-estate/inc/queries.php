@@ -79,9 +79,9 @@ function listingsall(){?>
                 ?>
                 <li class="card-all">
                 
-                        <div class="listings-1"><img src="<?php echo $picture  ?>" >
-    
-    
+                <div class="listings-1"><img src="<?php echo $picture  ?>" >
+
+
                         <div class="listings-1-con">
                         <div class="listing-comp"><?php echo $listing_company  ?></div>
                         <div class="list-info">
@@ -100,6 +100,8 @@ function listingsall(){?>
                         </div>
                         </div>
                         </div>
+                        
+                    
                     
                 </li>  
                 <?php endwhile; wp_reset_postdata(); ?>

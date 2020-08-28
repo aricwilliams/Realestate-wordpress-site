@@ -15,7 +15,16 @@ Template Name: Home Page
 </head>
 <body>
 <div class="hero-overlay">
-        <div class="hero" style="background-image: url(<?php echo get_theme_file_uri('/img/big-house.jpg') ?>)">
+<?php
+                  $image = get_field('hero_image');
+                  $picture = $image['sizes']['large'];
+                  $alt =['alt'];
+                  $title =['title'];
+
+                ?>
+
+    <div class="hero" style="background-image: url(<?php echo $picture ?>)"alt="<?php echo $alt['alt'];?>" title="<?php echo $title['title'];?>">
+       
             <header>
               <div class="header-container">
               
@@ -69,14 +78,36 @@ Template Name: Home Page
             
               
               ?></h1>
+
+
+    
+
+
+
+
+
+
               <div class="search-con">
                 <div class="search-btn">
                   <div class="s-btn-l" id="s-btn">Buy</div>
                   <div class="s-btn-r" id="s-btn">Rent</div>
                 </div>
-                <input placeholder="City, Neighborhood, Adress, School, ZIP, Agent, MLS #">
+                <form class="form-in" role="search" method="get" action="<?php echo home_url('/'); ?>">
+                  <input type="search" name="s" id="filter" placeholder="City, Neighborhood, Adress, School, ZIP, Agent, MLS #" value="<?php echo get_search_query() ?>">
+
+                  <div class="search-icon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </div>
+                  <div class="hidden-btn">
+                    <input  type="submit" >
+                  </div>
+                  
+                  
+                  </input>
+              
+                </form>
               </div>
-              <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+              
             </div>
           </div>
         </div>
@@ -118,7 +149,6 @@ Template Name: Home Page
     
       
   
-    <script src="js/script.js"></script>
   </body>
 
 

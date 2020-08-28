@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Property Search
+Template Name: Search results
 */
 
 ?>
@@ -72,7 +72,9 @@ Template Name: Property Search
                     // do something with $variable
                     echo $variable;
                 ?></h1>
-                <div class="search-con">
+
+
+            <div class="search-con">
                 <div class="search-btn">
                   <div class="s-btn-l" id="s-btn">Buy</div>
                   <div class="s-btn-r" id="s-btn">Rent</div>
@@ -80,7 +82,7 @@ Template Name: Property Search
                 <form class="form-in" role="search" method="get" action="<?php echo home_url('/'); ?>">
                   <input type="search" name="s" id="filter" placeholder="City, Neighborhood, Adress, School, ZIP, Agent, MLS #" value="<?php echo get_search_query() ?>">
 
-                  <div class="search-icon">
+                  <div class="search-icon"></div>
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </div>
                   <div class="hidden-btn">
@@ -92,10 +94,18 @@ Template Name: Property Search
               
                 </form>
               </div>
+                
                     
                 
             </div>
         </div>
+
+
+
+
+
+
+
     </div>
 </div> <!--end of hero overlay-->
     
@@ -111,6 +121,14 @@ Template Name: Property Search
     		<div class="row">
     			<div class="  col-lg-12">
     				<div class="listing-section ">
+                    <?php 
+                                            if($_GET['s'] && !empty($_GET['s']))
+                                            {
+                                                $text = $_GET['s'];
+                                            }
+
+                                        ?>
+                                            <h4>Searching for: <?php echo $text; ?></h4>
 	            <h2 class="mb-3 header-all">Homes Available Now</h2>
                         <div class="body-sec">
                             <div class="body-background">
@@ -120,9 +138,70 @@ Template Name: Property Search
 
                                     <div class="list-overlay">
 
-                                        <?php
-                                            listingsall();
+                                        <ul class="listings-list">
+                                        
+                                            
 
+                                        <?php 
+                                                    // $args = array(
+                                                    //     'post_type' => 'house_listings',
+                                                    //     'posts_per_page' => 6
+                                                    // );
+                                                    // $args = get_posts(array(
+                                                    //     'numberposts' =>  1,
+                                                    //     'include'   => '156,154,152',
+                                                    //     'post_type' => 'house_listings',
+                                                    // ));
+
+                                                    $args = array(
+                                                        'post_type' => 'house_listings',
+                                                        'posts_per_page' => -1,
+                                                        'post_status' => 'publish',
+                                                        's' => $text,
+                                                    );
+                                                    $query = new WP_Query($args);
+                                                    if ($query->have_posts() ) :
+
+                                                        while ( $query->have_posts() ) : $query->the_post();
+
+                                                        $listing_company = get_field('listing_company');
+                                                        $price = get_field('price');
+                                                        $address = get_field('address');
+                                                        $baths = get_field('baths');
+                                                        $sf = get_field('square_foot_');
+                                                        $image = get_field('image');
+                                                        $beds = get_field('bed');
+                                                        $picture = $image['sizes']['large'];
+                                                ?>
+                                                <li class="card">
+                                                
+                                                        <div class="listings-1"><img src="<?php echo $picture  ?>" >
+                                    
+                                    
+                                                        <div class="listings-1-con">
+                                                        <div class="listing-comp"><?php echo $listing_company  ?></div>
+                                                        <div class="list-info">
+                                                            <h3><?php echo $price  ?></h3>
+                                                            <div class="add-shrink">
+                                                                <p class="add-cont"><?php echo $address  ?></p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="house-info">
+                                                            <ul>
+                                                            <li><?php echo $beds  ?><br>Beds</li>
+                                                            <li><?php echo $baths  ?> <br>Baths</li>
+                                                            <li><?php echo $sf  ?> <br>Sq. Ft.</li>
+                                                            </ul>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                    
+                                                </li>  
+                                                       <?php endwhile;
+                                                        
+                                                        wp_reset_postdata();
+                                                    endif;
                                         ?>
                                     </div>
                                 </div>
